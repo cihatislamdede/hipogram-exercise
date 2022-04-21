@@ -5,6 +5,9 @@
   </button>
   <div class="collapse navbar-collapse mr-5" id="navbarNav">
     {% if user.is_authenticated %}
+      <a class="nav-link text-white" href="{% url "posts:create" %}">
+        Share a Photo
+      </a>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
