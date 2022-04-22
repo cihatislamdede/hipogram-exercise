@@ -1,0 +1,20 @@
+{% extends "base.html" %} 
+{% block content %}
+<div class="container text-center">
+    <div class="col">
+        <h3>Edit Post</h3>
+        <img
+            class="img-fluid mb-3 rounded"
+            style="max-height: 350px"
+            src="{{ post.image.url }}"
+          />
+        <form method="post" enctype="multipart/form-data">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button class="btn btn-success rounded" ><a type="submit" class="text-white">Update</a></button>
+            <button  class="btn bg-danger rounded" ><a class="text-white" href="#">Delete</a></button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

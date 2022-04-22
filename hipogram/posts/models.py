@@ -17,3 +17,6 @@ class Post(models.Model):
     #Get tags
     def get_tags(self):
         return self.tags.all()
+    
+    def __str__(self):
+        return self.text[:30]
