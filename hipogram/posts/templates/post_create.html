@@ -1,7 +1,13 @@
-{% extends "base.html" %} 
+{% extends 'base.html' %}
+{% if user.is_authenticated %}
 {% block content %}
-<div class="container">
-    AAAA
+<div class="container text-left justify-content-center">
+    <h2>Share Post</h2>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" >Share</button>
+    </form>
 </div>
 {% endblock content %}
-
+{% endif %}
