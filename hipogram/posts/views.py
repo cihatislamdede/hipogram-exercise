@@ -71,5 +71,4 @@ def post_render_view(request,posts):
 #Trend tags shared today (top 5 tags)
 def today_trend_tags():
     today = datetime.today().date()
-    tags = Post.objects.filter(creation_datetime__gte=today).values('tags__name','tags__slug').annotate(count=Count('tags__name')).order_by('-count')[:5]
-    return tags
+    return Post.objects.filter(creation_datetime__date__gte=today).values('tags__name','tags__slug').annotate(count=Count('tags__name')).order_by('-count')[:5]

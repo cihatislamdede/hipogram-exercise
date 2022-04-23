@@ -19,7 +19,7 @@
             <li><a href="/tag/{{tag.slug}}"  class="text-primary mx-2">#{{tag.name}}</a></li>
           {% endfor %}
           {% if user == post.created_by %}
-            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white" href="edit/{{post.pk}}">Update/Delete</a> </button>
+            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white" href="/edit/{{post.pk}}">Update/Delete</a> </button>
           {% endif %}
         </ul>
         <small class="card-footer text-muted text-right p-2"
