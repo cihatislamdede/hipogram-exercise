@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container text-left justify-content-center">
+<div class="container text-center">
     <h2>Share Post</h2>
     <form method="post" enctype="multipart/form-data">
         {{ form.as_p }}
         {% csrf_token %}
-        <button type="submit" >Share</button>
+        <button class="btn btn-success rounded" type="submit" >Share</button>
     </form>
 </div>
 {% endblock content %}

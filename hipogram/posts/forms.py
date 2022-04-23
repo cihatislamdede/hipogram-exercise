@@ -4,6 +4,7 @@ from .models import Post
 
 #Share post form
 class PostForm(forms.ModelForm):
+    #required image and text
     class Meta:
         model = Post
         fields = ['image', 'text', 'tags']

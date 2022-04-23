@@ -6,14 +6,15 @@
         <img
             class="img-fluid mb-3 rounded"
             style="max-height: 350px"
-            src="{{ post.image.url }}"
+            src="{{ post_image_url }}"
           />
-        <form method="post" enctype="multipart/form-data">
+        <form class="pb-4" method="post" enctype="multipart/form-data">
             {{ form.as_p }}
             {% csrf_token %}
-            <button class="btn btn-success rounded" ><a type="submit" class="text-white">Update</a></button>
-            <button  class="btn bg-danger rounded" ><a class="text-white" href="#">Delete</a></button>
+            <button class="btn rounded btn-success" type="submit" name="edit">Update</button>
+            <button class="btn rounded btn-danger" type="submit" name="delete">Delete</button>
         </form>
+        
       </div>
     </div>
   </div>
