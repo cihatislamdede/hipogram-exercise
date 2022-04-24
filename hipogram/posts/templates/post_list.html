@@ -14,14 +14,28 @@
           />
           <h4 class="card-title">{{ post.text }}</h4>
         </div>
-        <ul class="px-2 list-group list-group-horizontal-lg d-flex justify-content-between  list-unstyled py-2">
+        <ul class="px-2 list-group list-group-horizontal-lg d-flex justify-content-between list-unstyled py-2">
           {% for tag in post.get_tags %}
             <li><a href="/tag/{{tag.slug}}"  class="text-primary mx-2">#{{tag.name}}</a></li>
           {% endfor %}
           {% if user == post.created_by %}
-            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white" href="/edit/{{post.pk}}">Update/Delete</a> </button>
+            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white" href="/edit/{{post.pk}}">Update/Delete</a></button>
           {% endif %}
         </ul>
+      <div class="py-1 pl-2">
+        <form method="POST" action="{% url 'posts:like' post.pk %}">
+          {% csrf_token %}
+          {% if user in post.likes.all %}
+          <button type="submit" class="btn rounded btn-danger" name="unlike">
+              Unlike ({{ post.likes.count }})
+          </button>
+          {% else %}
+          <button type="submit" class="btn rounded btn-success" name="like">
+              Like ({{ post.likes.count }})
+          </button>
+          {% endif %}
+          </form>
+        </div>
         <small class="card-footer text-muted text-right p-2"
           >{{ post.creation_datetime|date:"H:i - d.m.Y" }}</small
         >

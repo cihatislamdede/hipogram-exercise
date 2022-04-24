@@ -9,14 +9,15 @@ class Tag(models.Model):
 
 class Post(models.Model):
     image = models.ImageField()
-    text = models.TextField()
+    text = models.TextField(blank=True)
     created_by = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     creation_datetime = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag,related_name='posts')
+    tags = models.ManyToManyField(Tag,related_name='posts', blank=True)
+    likes = models.ManyToManyField("auth.User", related_name='likes', blank=True)
 
     #Get tags
     def get_tags(self):
         return self.tags.all()
     
     def __str__(self):
-        return self.text[:30]
+        return self.text[:30] or  "..."

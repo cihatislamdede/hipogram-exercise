@@ -71,4 +71,15 @@ def post_render_view(request,posts):
 #Trend tags shared today (top 5 tags)
 def today_trend_tags():
     today = datetime.today().date()
-    return Post.objects.filter(creation_datetime__date__gte=today).values('tags__name','tags__slug').annotate(count=Count('tags__name')).order_by('-count')[:5]
+    return Post.objects.filter(creation_datetime__date__gte=today).exclude(tags=None).values('tags__name','tags__slug').annotate(count=Count('tags__name')).order_by('-count')[:5]
+
+#Like post view
+@login_required
+def like_post(request, pk):
+    if request.method == 'POST':
+        post = get_object_or_404(Post,pk=pk)
+        if 'unlike' in request.POST:
+            post.likes.remove(request.user)
+        elif 'like' in request.POST:    
+            post.likes.add(request.user)
+        return HttpResponseRedirect('/')

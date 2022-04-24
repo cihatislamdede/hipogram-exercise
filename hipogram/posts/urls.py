@@ -10,4 +10,5 @@ urlpatterns = [
     path("tag/<slug:tag>/", tag_list_view, name="tag_list"),
     path("user/<str:userName>/", user_posts_view, name="user_posts"),
     path("edit/<int:pk>/", post_edit_view, name="edit"),
+    path("like/<int:pk>/", like_post, name="like"),
 ]
