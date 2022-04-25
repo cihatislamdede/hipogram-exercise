@@ -26,7 +26,7 @@
         <form method="POST" action="{% url 'posts:like' post.pk %}">
           {% csrf_token %}
           {% if user in post.likes.all %}
-          <button type="submit" class="btn rounded btn-danger" name="unlike">
+          <button type="submit" class="btn rounded btn-primary" name="unlike">
               Unlike ({{ post.likes.count }})
           </button>
           {% else %}
@@ -42,13 +42,26 @@
       </div>
       {% endfor %}
     </div>
-    <div class="col-sm-4 h-25 border">
-      <h4 class="mt-2">Trend Tags</h4>
+    <div class="col-sm-4 h-25">
+      <div class="border rounded">
+      <h4 class="pt-2 pl-3 font-weight-bolder">Trend Tags</h4>
       <ul>
         {% for tag in tags %}
           <li><a href="/tag/{{tag.tags__slug}}"  class="text-primary mx-2">#{{tag.tags__name}} ({{tag.count}} Post)</a></li>
         {% endfor %}
       </ul>
+      </div>
+      <div class="rounded mt-2 border p-3">
+        <form type="get" action="/search/">
+          <input  id="search" type="text" name="search" class="rounded" placeholder="Search by description" >
+          <button id="search_submit" type="submit" class="btn rounded btn-warning btn-sm font-weight-bold">Search</button>
+        </form>
+      </div>
+      <div class="rounded mt-2 border p-3">
+        <form type="get" action="/top_posts">
+          <button type="submit" class="btn rounded btn-success btn-sm font-weight-bolder">Top Posts (All Time)</button>
+        </form>
+      </div>
     </div>
   </div>
    <!--Pagination-->

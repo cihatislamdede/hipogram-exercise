@@ -11,4 +11,6 @@ urlpatterns = [
     path("user/<str:userName>/", user_posts_view, name="user_posts"),
     path("edit/<int:pk>/", post_edit_view, name="edit"),
     path("like/<int:pk>/", like_post, name="like"),
+    path("search/", search_view, name="search"),
+    path("top_posts/", top_posts, name="top_posts"),
 ]

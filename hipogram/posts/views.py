@@ -67,7 +67,6 @@ def post_render_view(request,posts):
     page_obj = paginator.get_page(page_number)
     return render(request, "post_list.html", {'posts': page_obj, 'tags': today_trend_tags()})
 
-
 #Trend tags shared today (top 5 tags)
 def today_trend_tags():
     today = datetime.today().date()
@@ -83,3 +82,18 @@ def like_post(request, pk):
         elif 'like' in request.POST:    
             post.likes.add(request.user)
         return HttpResponseRedirect('/')
+
+#Search box by description text
+def search_view(request):
+    if request.method == 'GET':
+        query = request.GET.get('search',None)
+        if query:
+            return post_render_view(request, Post.objects.filter(text__icontains=query))
+        else:
+            return HttpResponseRedirect('/')
+
+#Top all time 5 posts according to likes
+def top_posts(request):
+    if request.method == 'GET':
+        posts = Post.objects.all().order_by("-likes")[:5]
+        return post_render_view(request, posts)
