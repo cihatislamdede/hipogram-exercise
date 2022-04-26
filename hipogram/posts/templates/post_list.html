@@ -47,7 +47,7 @@
       <h4 class="pt-2 pl-3 font-weight-bolder">Trend Tags</h4>
       <ul>
         {% for tag in tags %}
-          <li><a href="/tag/{{tag.tags__slug}}"  class="text-primary mx-2">#{{tag.tags__name}} ({{tag.count}} Post)</a></li>
+          <li><a href="/tag/{{tag.tag__slug}}"  class="text-primary mx-2">#{{tag.tag__name}} ({{tag.count}} Post)</a></li>
         {% endfor %}
       </ul>
       </div>

@@ -69,8 +69,9 @@ def post_render_view(request,posts):
 
 #Trend tags shared today (top 5 tags)
 def today_trend_tags():
-    today = datetime.today().date()
-    return Post.objects.filter(creation_datetime__date__gte=today).exclude(tags=None).values('tags__name','tags__slug').annotate(count=Count('tags__name')).order_by('-count')[:5]
+    today = datetime.utcnow().date()
+    trend_tags = Post.tags.through.objects.filter(post__creation_datetime__date = today).values('tag__name','tag__slug',).annotate(count=Count('tag__name')).order_by('-count')[:5]
+    return trend_tags
 
 #Like post view
 @login_required
@@ -92,8 +93,9 @@ def search_view(request):
         else:
             return HttpResponseRedirect('/')
 
-#Top all time 5 posts according to likes
+#Top 5 posts according to likes (all time)
 def top_posts(request):
     if request.method == 'GET':
-        posts = Post.objects.all().order_by("-likes")[:5]
+        # like count > 0
+        posts = Post.objects.annotate(like_count=Count('likes')).exclude(like_count=0).order_by('-like_count')[:5]
         return post_render_view(request, posts)
