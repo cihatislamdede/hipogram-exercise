@@ -19,7 +19,7 @@
             <li><a href="/tag/{{tag.slug}}"  class="text-primary mx-2">#{{tag.name}}</a></li>
           {% endfor %}
           {% if user == post.created_by %}
-            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white" href="/edit/{{post.pk}}">Update/Delete</a></button>
+            <button class="btn btn-primary rounded py-1 px-2"><a class="text-white float-right" href="/edit/{{post.pk}}">Update/Delete</a></button>
           {% endif %}
         </ul>
       <div class="py-1 pl-2">
@@ -35,6 +35,32 @@
           </button>
           {% endif %}
           </form>
+            <div class="card-body">
+              {% for comment in post.comments.all %}
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-subtitle mb-2 font-weight-bolder">{{ comment.created_by.username }}</h5>
+                  <small class=" text-muted text-right p-2 float-right">
+                    {{ comment.created_at|date:"H:i - d.m.Y" }}</small>
+                  <p class="card-text text-sm">{{ comment.text }}</p>
+                  {% if user == comment.created_by %}
+                  <form method="POST" action="{% url 'posts:delete_comment' comment.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm float-right">Delete</button>
+                  </form>
+                  {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            <form method="POST" action="{% url 'posts:comment' post.pk %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea class="form-control" id="comment" name="comment" rows="2"></textarea>
+              </div>
+              <button type="submit" class="btn btn-secondary">Submit Comment</button>
+            </form>
+          </div>
         </div>
         <small class="card-footer text-muted text-right p-2"
           >{{ post.creation_datetime|date:"H:i - d.m.Y" }}</small

@@ -7,6 +7,14 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class Comment(models.Model):
+    text = models.TextField()
+    created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text[:20]
+
 class Post(models.Model):
     image = models.ImageField()
     text = models.TextField(blank=True)
@@ -14,6 +22,7 @@ class Post(models.Model):
     creation_datetime = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag,related_name='posts', blank=True)
     likes = models.ManyToManyField("auth.User", related_name='likes', blank=True)
+    comments = models.ManyToManyField(Comment, related_name='posts', blank=True)
 
     #Get tags
     def get_tags(self):

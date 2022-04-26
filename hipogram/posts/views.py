@@ -2,7 +2,7 @@ from datetime import datetime
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from hipogram.posts.forms import EditForm, PostForm
-from hipogram.posts.models import Post
+from hipogram.posts.models import Post,Comment
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count 
@@ -99,3 +99,23 @@ def top_posts(request):
         # like count > 0
         posts = Post.objects.annotate(like_count=Count('likes')).exclude(like_count=0).order_by('-like_count')[:5]
         return post_render_view(request, posts)
+
+#Add comment to post
+@login_required
+def add_comment_to_post(request, pk):
+    if request.method == 'POST':
+        post = get_object_or_404(Post,pk=pk)
+        comment = request.POST.get('comment', None)
+        if comment:
+            new_comment = post.comments.create(text=comment, created_by=request.user)
+            new_comment.save()
+        return HttpResponseRedirect('/')
+
+#Delete comment
+@login_required
+def delete_comment(request, pk):
+    if request.method == 'POST':
+        comment = get_object_or_404(Comment,pk=pk)
+        if comment.created_by == request.user:
+            comment.delete()
+        return HttpResponseRedirect('/')

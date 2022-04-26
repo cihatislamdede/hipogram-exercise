@@ -13,4 +13,6 @@ urlpatterns = [
     path("like/<int:pk>/", like_post, name="like"),
     path("search/", search_view, name="search"),
     path("top_posts/", top_posts, name="top_posts"),
+    path("comment/<int:pk>/", add_comment_to_post, name="comment"),
+    path("delete_comment/<int:pk>/", delete_comment, name="delete_comment"),
 ]
