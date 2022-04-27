@@ -15,7 +15,6 @@ def post_list_view(request):
 #Create post view
 @login_required
 def post_create_view(request):
-    form = PostForm()
     if request.method == 'POST': 
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
@@ -25,14 +24,16 @@ def post_create_view(request):
             #for tags 
             form.save_m2m()
             return HttpResponseRedirect('/')
+    else:
+        form = PostForm()
     return render(request, 'post_create.html', context={'form': form})
 
 #Post edit view
 @login_required
 def post_edit_view(request, pk):
     post = get_object_or_404(Post,pk=pk)
-    form = EditForm(instance=post)
-    if request.user == post.created_by: 
+    if request.user == post.created_by:
+        form = EditForm(instance=post)
         if 'edit' in request.POST:
             form = EditForm(request.POST, instance=post)
             if form.is_valid():
