@@ -1,6 +1,8 @@
 # Hipogram
 Hipo Backend Team Interview Exercise
 
+![alt text](https://ipfs.io/ipfs/QmeMiTHpF4iipqXbqrTSdDfdNUBBUDg9jH2MrkzNB9y38i)
+
 ## Installation
 
 1. Clone this repository:
